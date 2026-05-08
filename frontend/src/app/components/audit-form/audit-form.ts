@@ -12,6 +12,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatSelectModule } from '@angular/material/select';
 import { AuditService } from '../../services/audit';
 
+
 @Component({
   selector: 'app-audit-form',
   standalone: true,
@@ -38,6 +39,8 @@ export class AuditForm implements OnInit {
   isLoading: boolean = false;
   sortOrder: string = 'date_desc';
   selectAll: boolean = false;
+  searchQuery: string = '';
+  allAudits: any[] = []; // stocke la liste complète
 
   displayedColumns: string[] = ['select', 'url', 'score', 'trend', 'date', 'actions'];
 
@@ -48,14 +51,15 @@ export class AuditForm implements OnInit {
   }
 
   chargerHistorique() {
-    this.auditService.getAudits().subscribe({
-      next: (data) => {
-        this.audits = data.map((a: any) => ({ ...a, selected: false }));
-        this.sortAudits();
-      },
-      error: (err) => console.error('Erreur historique :', err)
-    });
-  }
+  this.auditService.getAudits().subscribe({
+    next: (data) => {
+      this.allAudits = data.map((a: any) => ({ ...a, selected: false }));
+      this.audits = [...this.allAudits];
+      this.sortAudits();
+    },
+    error: (err) => console.error('Erreur historique :', err)
+  });
+}
 
   lancerAudit() {
     if (!this.siteUrl || this.isLoading) return;
@@ -142,6 +146,18 @@ export class AuditForm implements OnInit {
 
   rerun(url: string) {
   this.siteUrl = url;
+}
+
+filterAudits() {
+  const q = this.searchQuery.toLowerCase().trim();
+  if (!q) {
+    this.audits = [...this.allAudits];
+  } else {
+    this.audits = this.allAudits.filter(a =>
+      a.url.toLowerCase().includes(q)
+    );
+  }
+  this.sortAudits();
 }
 }
 

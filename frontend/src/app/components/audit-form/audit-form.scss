@@ -368,6 +368,8 @@
 .analyze-btn {
   display: flex;
   align-items: center;
+  position: relative;
+  top: -10px;
   gap: 8px;
   background: #f0f0f0 !important;
   color: #000 !important;

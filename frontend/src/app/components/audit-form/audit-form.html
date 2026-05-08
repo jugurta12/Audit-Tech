@@ -15,9 +15,9 @@
     <div class="nav-right">
       <div class="search-box">
         <mat-icon class="search-icon">search</mat-icon>
-        <input type="text" placeholder="Search sites or URLs…" class="search-input">
+        <input type="text" [(ngModel)]="searchQuery" (input)="filterAudits()" placeholder="Search sites or URLs…" class="search-input">
       </div>
-      <button class="cta-btn" (click)="lancerAudit()">Run New Analysis</button>
+      
     </div>
   </nav>
 
