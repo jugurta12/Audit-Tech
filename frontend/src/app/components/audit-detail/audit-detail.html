@@ -53,12 +53,12 @@
               [attr.stroke-dasharray]="getCircleDash(audit.score)"
               transform="rotate(-90 60 60)"
               class="score-arc"/>
-            <text x="60" y="53" text-anchor="middle"
-              class="score-val"
-              [attr.fill]="getScoreColor(audit.score)">
-              {{ audit.score }}
-            </text>
-            <text x="60" y="70" text-anchor="middle" class="score-sub">/100</text>
+            <text x="60" y="60" text-anchor="middle"
+  dominant-baseline="middle"
+  class="score-val"
+  [attr.fill]="getScoreColor(audit.score)">
+  {{ audit.score }}
+</text>
           </svg>
           <div class="score-label-tag" [style.color]="getScoreColor(audit.score)">
             {{ getScoreLabel(audit.score) }}
