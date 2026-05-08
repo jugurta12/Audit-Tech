@@ -1,0 +1,114 @@
+<div class="detail-page">
+
+  <!-- Navbar -->
+  <nav class="topnav">
+    <div class="logo">
+      <span>Audit-Tech</span>
+    </div>
+    <div class="nav-links">
+        <span class="nav-link" (click)="goBack()">Dashboard</span>
+        <span class="nav-link">URL Input / Analysis</span>
+        <span class="nav-link">Results History</span>
+        <span class="nav-link active">Detail Report</span>
+        <span class="nav-link">Settings & Integrations</span>
+    </div>
+    <button class="back-btn" (click)="goBack()">
+      <mat-icon>arrow_back</mat-icon>
+      Back to Dashboard
+    </button>
+  </nav>
+
+  <div class="content" *ngIf="audit">
+
+    <!-- Header -->
+    <div class="page-header">
+      <div class="page-header-left">
+        <div class="page-label">Detail Report</div>
+        <div class="page-url">{{ audit.url }}</div>
+        <div class="page-date">{{ audit.createdAt | date:'EEEE d MMMM yyyy — HH:mm' }}</div>
+      </div>
+      <div class="page-header-right">
+        <span class="status-pill" [class.completed]="audit.status === 'completed'">
+          <span class="status-dot"></span>
+          {{ audit.status }}
+        </span>
+      </div>
+    </div>
+
+    <!-- Main grid -->
+    <div class="main-grid">
+
+      <!-- Score ring card -->
+      <div class="card score-card">
+        <div class="card-label">Performance Score</div>
+        <div class="score-ring-wrapper">
+          <svg viewBox="0 0 120 120" class="score-ring">
+            <circle cx="60" cy="60" r="54"
+              fill="none" stroke="#1e1e1e" stroke-width="8"/>
+            <circle cx="60" cy="60" r="54"
+              fill="none"
+              [attr.stroke]="getScoreColor(audit.score)"
+              stroke-width="8"
+              stroke-linecap="round"
+              [attr.stroke-dasharray]="getCircleDash(audit.score)"
+              transform="rotate(-90 60 60)"
+              class="score-arc"/>
+            <text x="60" y="53" text-anchor="middle"
+              class="score-val"
+              [attr.fill]="getScoreColor(audit.score)">
+              {{ audit.score }}
+            </text>
+            <text x="60" y="70" text-anchor="middle" class="score-sub">/100</text>
+          </svg>
+          <div class="score-label-tag" [style.color]="getScoreColor(audit.score)">
+            {{ getScoreLabel(audit.score) }}
+          </div>
+        </div>
+      </div>
+
+      <!-- Metrics card -->
+      <div class="card metrics-card">
+        <div class="card-label">Performance Breakdown</div>
+        <div class="metrics-list">
+          <div class="metric-row" *ngFor="let m of getMetrics(audit.score)">
+            <div class="metric-name">{{ m.label }}</div>
+            <div class="metric-track">
+              <div class="metric-fill"
+                [style.width.%]="m.val"
+                [style.background]="getScoreColor(m.val)">
+              </div>
+            </div>
+            <div class="metric-val" [style.color]="getScoreColor(m.val)">{{ m.val }}</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Info card -->
+      <div class="card info-card">
+        <div class="card-label">Audit Info</div>
+        <div class="info-row">
+          <span class="info-key">URL</span>
+          <span class="info-val url">{{ audit.url }}</span>
+        </div>
+        <div class="info-row">
+          <span class="info-key">Score</span>
+          <span class="info-val" [style.color]="getScoreColor(audit.score)">{{ audit.score }} / 100</span>
+        </div>
+        <div class="info-row">
+          <span class="info-key">Status</span>
+          <span class="info-val">{{ audit.status }}</span>
+        </div>
+        <div class="info-row">
+          <span class="info-key">Date</span>
+          <span class="info-val">{{ audit.createdAt | date:'yyyy-MM-dd HH:mm' }}</span>
+        </div>
+        <div class="info-row">
+          <span class="info-key">Audit ID</span>
+          <span class="info-val muted">#{{ audit.id }}</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>

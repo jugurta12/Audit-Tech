@@ -11,6 +11,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatSelectModule } from '@angular/material/select';
 import { AuditService } from '../../services/audit';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -41,6 +42,7 @@ export class AuditForm implements OnInit {
   selectAll: boolean = false;
   searchQuery: string = '';
   allAudits: any[] = []; // stocke la liste complète
+  private router = inject(Router);
 
   displayedColumns: string[] = ['select', 'url', 'score', 'trend', 'date', 'actions'];
 
@@ -159,5 +161,50 @@ filterAudits() {
   }
   this.sortAudits();
 }
+
+selectedAudit: any = null;
+showPanel: boolean = false;
+
+openDetail(audit: any) {
+  this.router.navigate(['/detail', audit.id], { state: { audit } });
+}
+
+closePanel() {
+  this.showPanel = false;
+  this.selectedAudit = null;
+}
+
+getScoreColor(score: number): string {
+  if (score >= 70) return '#4ade80';
+  if (score >= 50) return '#fbbf24';
+  return '#f87171';
+}
+
+getScoreGlow(score: number): string {
+  if (score >= 70) return '#4ade8044';
+  if (score >= 50) return '#fbbf2444';
+  return '#f8717144';
+}
+
+getScoreLabel(score: number): string {
+  if (score >= 70) return 'Good';
+  if (score >= 50) return 'Needs Work';
+  return 'Poor';
+}
+
+getCircleDash(score: number): string {
+  const circumference = 2 * Math.PI * 54;
+  const filled = (score / 100) * circumference;
+  return `${filled} ${circumference}`;
+}
+
+openLastDetail() {
+  if (this.audits.length === 0) return;
+  const last = this.allAudits.reduce((a, b) => 
+    new Date(a.createdAt) > new Date(b.createdAt) ? a : b
+  );
+  this.router.navigate(['/detail', last.id], { state: { audit: last } });
+}
+
 }
 
