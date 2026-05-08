@@ -383,3 +383,42 @@
   &:disabled { background: #1e1e1e !important; color: #444 !important; cursor: not-allowed; }
   mat-icon { font-size: 16px; }
 }
+
+// ── Material Icons sizing fix ──────────────────────────
+mat-icon {
+  // Reset global — évite les décalages par défaut Material
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  overflow: hidden !important;
+  vertical-align: middle !important;
+}
+
+// Icône recherche
+.search-icon {
+  font-size: 18px !important;
+  width: 18px !important;
+  height: 18px !important;
+  color: #555;
+}
+
+// Icône play dans le bouton analyze
+.analyze-btn mat-icon {
+  font-size: 18px !important;
+  width: 18px !important;
+  height: 18px !important;
+}
+
+// Icône delete dans bulk
+.bulk-del-btn mat-icon {
+  font-size: 16px !important;
+  width: 16px !important;
+  height: 16px !important;
+}
+
+// Icônes filter chips
+.filter-chip mat-icon {
+  font-size: 14px !important;
+  width: 14px !important;
+  height: 14px !important;
+}
