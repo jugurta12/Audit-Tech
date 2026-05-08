@@ -1,0 +1,173 @@
+<div class="dashboard">
+
+  <!-- Navbar -->
+  <nav class="topnav">
+    <div class="logo">
+      <span>Audit-Tech</span>
+    </div>
+    <div class="nav-links">
+      <span class="nav-link active">Dashboard</span>
+      <span class="nav-link">URL Input / Analysis</span>
+      <span class="nav-link">Results History</span>
+      <span class="nav-link">Detail Report</span>
+      <span class="nav-link">Settings & Integrations</span>
+    </div>
+    <div class="nav-right">
+      <div class="search-box">
+        <mat-icon class="search-icon">search</mat-icon>
+        <input type="text" placeholder="Search sites or URLs…" class="search-input">
+      </div>
+      <button class="cta-btn" (click)="lancerAudit()">Run New Analysis</button>
+    </div>
+  </nav>
+
+  <div class="content">
+
+    <!-- Top row -->
+    <div class="top-grid">
+      <div class="card run-card">
+        <div class="card-label">Run New Analysis</div>
+        <div class="run-row">
+          <mat-form-field class="url-field custom-dark-input" appearance="outline">
+            <mat-label>URL du site à analyser</mat-label>
+            <input matInput [(ngModel)]="siteUrl" placeholder="https://exemple.com" [disabled]="isLoading">
+          </mat-form-field>
+          <button class="analyze-btn" (click)="lancerAudit()" [disabled]="isLoading || !siteUrl">
+            <mat-spinner *ngIf="isLoading" diameter="18"></mat-spinner>
+            <mat-icon *ngIf="!isLoading">play_arrow</mat-icon>
+            <span>{{ isLoading ? 'Analyzing…' : 'Run Analysis' }}</span>
+          </button>
+        </div>
+      </div>
+      <div class="card stat-card">
+        <div class="card-label">Total Analyses</div>
+        <div class="stat-value">{{ audits.length }}</div>
+        <div class="stat-sub">All time</div>
+      </div>
+    </div>
+
+    <!-- Filters + bulk -->
+    <div class="filter-row">
+      <div class="filter-chip">
+        <mat-icon>calendar_today</mat-icon>
+        2026-04-01 → 2026-05-08
+      </div>
+      <div class="filter-chip">
+        <mat-icon>tune</mat-icon>
+        Score ≥ 50
+      </div>
+      <div class="filter-chip">
+        <mat-icon>devices</mat-icon>
+        All devices
+      </div>
+      <div class="bulk-bar">
+        <label class="select-all-label">
+          <input type="checkbox" (change)="toggleAll($event.target.checked)"> Select all visible
+        </label>
+        <button class="bulk-del-btn" (click)="bulkDelete()">
+          <mat-icon>delete</mat-icon> Bulk Delete
+        </button>
+        <span class="sort-label">Sort By</span>
+        <select class="sort-select" [(ngModel)]="sortOrder" (change)="sortAudits()">
+          <option value="score_desc">Score: High → Low</option>
+          <option value="score_asc">Score: Low → High</option>
+          <option value="date_desc">Date: Newest</option>
+          <option value="date_asc">Date: Oldest</option>
+        </select>
+        <select class="sort-select">
+          <option>10 rows</option>
+          <option>25 rows</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Table -->
+    <div class="table-card">
+      <div class="table-header">
+        <span class="table-title">Results History</span>
+        <span class="showing-label">Showing 1–{{ audits.length }} of {{ audits.length }} results</span>
+      </div>
+
+      <table mat-table [dataSource]="audits" class="audit-table">
+
+        <ng-container matColumnDef="select">
+          <th mat-header-cell *matHeaderCellDef></th>
+          <td mat-cell *matCellDef="let audit">
+            <input type="checkbox" [(ngModel)]="audit.selected">
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="url">
+          <th mat-header-cell *matHeaderCellDef>Site Name</th>
+          <td mat-cell *matCellDef="let audit">
+            <div class="site-name">{{ audit.url }}</div>
+            <div class="site-sub">Google PageSpeed Insight Analysis</div>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="score">
+          <th mat-header-cell *matHeaderCellDef class="center-cell">Performance</th>
+          <td mat-cell *matCellDef="let audit" class="center-cell">
+            <span class="score-badge"
+              [class.green]="audit.score >= 70"
+              [class.yellow]="audit.score >= 50 && audit.score < 70"
+              [class.red]="audit.score < 50"
+              [matTooltip]="audit.details || 'No critical issues'">
+              {{ audit.score }}
+            </span>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="trend">
+          <th mat-header-cell *matHeaderCellDef class="center-cell">Trend</th>
+          <td mat-cell *matCellDef="let audit" class="center-cell">
+            <div class="mini-chart">
+              <div class="mini-bar" style="height:10px"></div>
+              <div class="mini-bar" style="height:14px"></div>
+              <div class="mini-bar" style="height:12px"></div>
+              <div class="mini-bar" style="height:18px"></div>
+              <div class="mini-bar" style="height:16px"></div>
+            </div>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="date">
+          <th mat-header-cell *matHeaderCellDef class="center-cell">Timestamp</th>
+          <td mat-cell *matCellDef="let audit" class="center-cell date-cell">
+            {{ audit.createdAt | date:'yyyy-MM-dd HH:mm' }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef class="center-cell">Actions</th>
+          <td mat-cell *matCellDef="let audit" class="center-cell">
+            <div class="action-group">
+              <button class="action-link view" [matTooltip]="audit.details || 'No details'">View Details</button>
+              <button class="action-link rerun">Rerun</button>
+              <button class="action-link delete" (click)="supprimer(audit.id)">Delete</button>
+            </div>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="audit-row"></tr>
+      </table>
+
+      <div *ngIf="audits.length === 0 && !isLoading" class="empty-state">
+        No audit history found.
+      </div>
+
+      <div class="pagination">
+        <span class="page-info">Rows per page: 10</span>
+        <div class="page-btns">
+          <button class="page-btn">Prev</button>
+          <button class="page-btn active">1</button>
+          <button class="page-btn">2</button>
+          <button class="page-btn">3</button>
+          <button class="page-btn">Next</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

@@ -1,0 +1,17 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Audit {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  url       String
+  score     Int
+  status    String   @default("completed")
+  details   String?  // <-- AJOUTE ÇA (On va stocker du JSON ici)
+}
