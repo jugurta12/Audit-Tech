@@ -139,4 +139,9 @@ export class AuditForm implements OnInit {
   get selectedCount(): number {
     return this.audits.filter(a => a.selected).length;
   }
+
+  rerun(url: string) {
+  this.siteUrl = url;
 }
+}
+

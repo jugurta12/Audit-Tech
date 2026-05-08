@@ -132,7 +132,7 @@
           <td mat-cell *matCellDef="let audit" class="center-cell">
             <div class="action-group">
               <button class="action-link view" [matTooltip]="audit.details || 'No details'">View Details</button>
-              <button class="action-link rerun">Rerun</button>
+              <button class="action-link rerun" (click)="rerun(audit.url)">Rerun</button>
               <button class="action-link delete" (click)="supprimer(audit.id)">Delete</button>
             </div>
           </td>
