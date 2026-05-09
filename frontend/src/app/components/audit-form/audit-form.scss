@@ -22,16 +22,6 @@
   font-size: 15px;
   font-weight: 500;
   margin-right: 12px;
-  .logo-icon {
-    width: 30px;
-    height: 30px;
-    background: #fff;
-    border-radius: 6px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    mat-icon { color: #000; font-size: 18px; }
-  }
 }
 
 .nav-links {
@@ -65,7 +55,10 @@
   border-radius: 6px;
   padding: 5px 10px;
   gap: 6px;
-  .search-icon { font-size: 16px; color: #555; }
+  .search-icon {
+    font-size: 16px;
+    color: #555;
+  }
   .search-input {
     background: none;
     border: none;
@@ -136,7 +129,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-   align-items: center;
+  align-items: center;
   padding: 24px;
 }
 
@@ -227,6 +220,9 @@
   border: 0.5px solid #222;
   border-radius: 10px;
   overflow: hidden;
+  min-height: 500px;
+  display: flex;
+  flex-direction: column;
 }
 
 .table-header {
@@ -235,6 +231,7 @@
   align-items: center;
   padding: 14px 18px;
   border-bottom: 0.5px solid #1e1e1e;
+  flex-shrink: 0;
 }
 
 .table-title { font-size: 15px; font-weight: 500; }
@@ -243,6 +240,7 @@
 .audit-table {
   width: 100%;
   background: transparent !important;
+  table-layout: fixed;
 }
 
 .mat-mdc-header-cell {
@@ -323,8 +321,11 @@
 }
 
 .empty-state {
-  padding: 80px 20px;
-  text-align: center;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 360px;
   color: #444;
   font-style: italic;
   background: #0d0d0d;
@@ -336,6 +337,8 @@
   align-items: center;
   padding: 12px 18px;
   border-top: 0.5px solid #1a1a1a;
+  flex-shrink: 0;
+  margin-top: auto;
 }
 
 .page-info { font-size: 12px; color: #444; }
@@ -391,7 +394,6 @@
 
 // ── Material Icons sizing fix ──────────────────────────
 mat-icon {
-  // Reset global — évite les décalages par défaut Material
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
@@ -399,7 +401,6 @@ mat-icon {
   vertical-align: middle !important;
 }
 
-// Icône recherche
 .search-icon {
   font-size: 18px !important;
   width: 18px !important;
@@ -407,23 +408,103 @@ mat-icon {
   color: #555;
 }
 
-// Icône play dans le bouton analyze
 .analyze-btn mat-icon {
   font-size: 18px !important;
   width: 18px !important;
   height: 18px !important;
 }
 
-// Icône delete dans bulk
 .bulk-del-btn mat-icon {
   font-size: 16px !important;
   width: 16px !important;
   height: 16px !important;
 }
 
-// Icônes filter chips
 .filter-chip mat-icon {
   font-size: 14px !important;
   width: 14px !important;
   height: 14px !important;
+}
+
+// ── Responsive ────────────────────────────────────────
+@media (max-width: 600px) {
+  .topnav {
+    flex-wrap: wrap;
+    padding: 8px 12px;
+    gap: 4px;
+  }
+
+  .logo {
+    order: 1;
+    flex-shrink: 0;
+  }
+
+  .nav-links {
+    display: flex !important;
+    flex-wrap: wrap;
+    width: 100%;
+    order: 2;
+    gap: 2px;
+    margin-top: 4px;
+  }
+
+  .nav-link {
+    font-size: 10px !important;
+    padding: 3px 6px !important;
+  }
+
+  .nav-right {
+    order: 3;
+    width: 100%;
+    margin-left: 0;
+    margin-top: 6px;
+  }
+
+  .search-box {
+    width: 100%;
+  }
+
+  .search-input {
+    width: 100% !important;
+    flex: 1;
+  }
+
+  .top-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .run-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .analyze-btn {
+    top: 0 !important;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .bulk-bar {
+    gap: 6px;
+    font-size: 11px;
+    flex-wrap: wrap;
+  }
+
+  .sort-select {
+    font-size: 10px;
+  }
+
+  .mat-column-trend,
+  .mat-column-date {
+    display: none !important;
+  }
+
+  .page-btns {
+    gap: 2px;
+  }
+
+  .page-btn {
+    padding: 4px 7px;
+    font-size: 11px;
+  }
 }
