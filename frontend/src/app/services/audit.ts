@@ -23,5 +23,8 @@ export class AuditService {
 supprimerAudit(id: number): Observable<any> {
   return this.http.delete(`${this.apiUrl}?id=${id}`);
 }
+clearAll(): Observable<any> {
+  return this.http.delete(`${this.apiUrl}?clearAll=true`);
+}
 }
 

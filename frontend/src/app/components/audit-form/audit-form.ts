@@ -206,5 +206,8 @@ openLastDetail() {
   this.router.navigate(['/detail', last.id], { state: { audit: last } });
 }
 
+goToSettings() {
+  this.router.navigate(['/settings']);
+}
 }
 

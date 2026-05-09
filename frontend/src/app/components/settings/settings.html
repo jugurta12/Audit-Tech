@@ -1,0 +1,99 @@
+<div class="settings-page" [class.light]="lightMode">
+
+  <nav class="topnav">
+    <div class="logo"><span>Audit-Tech</span></div>
+    <div class="nav-links">
+      <span class="nav-link" (click)="goBack()">Dashboard</span>
+      <span class="nav-link active">Settings & Integrations</span>
+    </div>
+    <button class="back-btn" (click)="goBack()">
+      <mat-icon>arrow_back</mat-icon>
+      Back to Dashboard
+    </button>
+  </nav>
+
+  <div class="content">
+
+    <div class="page-header">
+      <div class="page-label">Configuration</div>
+      <div class="page-title">Settings & Integrations</div>
+    </div>
+
+    <div class="settings-grid">
+
+      <!-- Section Données -->
+      <div class="card">
+        <div class="card-label">
+          <mat-icon>storage</mat-icon>
+          Data Management
+        </div>
+        <div class="card-desc">Permanently delete all audit records from the database.</div>
+
+        <div class="setting-actions">
+          <div class="setting-action-row danger">
+            <div>
+              <div class="action-title">Clear History</div>
+              <div class="action-desc">Delete all audit records — this cannot be undone</div>
+            </div>
+            <button class="action-btn danger" (click)="clearHistory()">
+              <mat-icon>delete_forever</mat-icon>
+              Clear
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section Affichage -->
+      <div class="card">
+        <div class="card-label">
+          <mat-icon>tune</mat-icon>
+          Display
+        </div>
+        <div class="card-desc">Customize how the dashboard looks and behaves.</div>
+
+        <div class="setting-rows">
+
+          <div class="setting-row">
+            <div>
+              <div class="setting-title">Rows per page</div>
+              <div class="setting-desc">Number of audits shown in the table</div>
+            </div>
+            <div class="row-select-group">
+              <button class="row-btn"
+                *ngFor="let n of [5, 10, 25]"
+                [class.active]="rowsPerPage === n"
+                (click)="rowsPerPage = n">
+                {{ n }}
+              </button>
+            </div>
+          </div>
+
+          <div class="setting-row">
+            <div>
+              <div class="setting-title">Light Mode</div>
+              <div class="setting-desc">Switch between dark and light theme</div>
+            </div>
+            <div class="toggle-wrapper" (click)="lightMode = !lightMode; applyTheme()">
+              <div class="toggle" [class.on]="lightMode">
+                <div class="toggle-knob"></div>
+              </div>
+              <span class="toggle-label">{{ lightMode ? 'On' : 'Off' }}</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Save -->
+    <div class="save-row">
+      <span class="saved-msg" *ngIf="savedMessage">{{ savedMessage }}</span>
+      <button class="save-btn" (click)="saveSettings()">
+        <mat-icon>save</mat-icon>
+        Save Settings
+      </button>
+    </div>
+
+  </div>
+</div>

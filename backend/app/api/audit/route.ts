@@ -106,18 +106,24 @@ export async function DELETE(request: Request) {
   try {
     const { searchParams } = new URL(request.url);
     const id = searchParams.get('id');
+    const clearAll = searchParams.get('clearAll');
+
+    if (clearAll === 'true') {
+      await prisma.audit.deleteMany({});
+      return NextResponse.json({ message: "Historique vidé" }, {
+        headers: { 'Access-Control-Allow-Origin': 'http://localhost:4200' }
+      });
+    }
 
     if (!id) {
       return NextResponse.json({ error: "ID manquant" }, { status: 400 });
     }
 
-    await prisma.audit.delete({
-      where: { id: Number(id) },
-    });
-
+    await prisma.audit.delete({ where: { id: Number(id) } });
     return NextResponse.json({ message: "Audit supprimé" }, {
       headers: { 'Access-Control-Allow-Origin': 'http://localhost:4200' }
     });
+
   } catch (error) {
     console.error("❌ Erreur DELETE:", error);
     return NextResponse.json({ error: "Erreur lors de la suppression" }, { status: 500 });
