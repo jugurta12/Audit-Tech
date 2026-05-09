@@ -44,3 +44,132 @@ body {
   height: 100%;
 }
 /* You can add global styles to this file, and also import other style files */
+
+// ── Light Mode global ─────────────────────────────────
+body.light-mode {
+  color-scheme: light;
+
+  .dashboard, .detail-page, .settings-page {
+    background: #f5f5f5 !important;
+    color: #111 !important;
+  }
+
+  .topnav {
+    background: #fff !important;
+    border-bottom-color: #e0e0e0 !important;
+  }
+
+  .logo span { color: #111 !important; }
+
+  .nav-link {
+    color: #888 !important;
+    &:hover { background: #eee !important; color: #111 !important; }
+    &.active { background: #e0e0e0 !important; color: #111 !important; }
+  }
+
+  .back-btn, .cta-btn {
+    background: #eee !important;
+    border-color: #ddd !important;
+    color: #333 !important;
+  }
+
+  .card, .table-card, .run-card, .stat-card {
+    background: #fff !important;
+    border-color: #e0e0e0 !important;
+  }
+
+  .card-label, .page-label, .stat-sub, .showing-label { color: #999 !important; }
+  .stat-value, .table-title, .page-title, .page-url { color: #111 !important; }
+
+  .mat-mdc-header-cell {
+    background: #f0f0f0 !important;
+    color: #888 !important;
+    border-bottom-color: #e0e0e0 !important;
+  }
+
+  .mat-mdc-cell {
+    color: #333 !important;
+    border-bottom-color: #eee !important;
+  }
+
+  .audit-row:hover .mat-mdc-cell { background: #f5f5f5 !important; }
+
+  .site-name { color: #2563eb !important; }
+  .site-sub { color: #aaa !important; }
+  .date-cell { color: #999 !important; }
+
+  .search-box {
+    background: #fff !important;
+    border-color: #ddd !important;
+    .search-input { color: #111 !important; &::placeholder { color: #bbb !important; } }
+  }
+
+  .bulk-bar, .filter-chip {
+    background: #fff !important;
+    border-color: #e0e0e0 !important;
+    color: #888 !important;
+  }
+
+  .sort-select {
+    background: #fff !important;
+    color: #333 !important;
+    border-color: #ddd !important;
+  }
+
+  .bulk-del-btn {
+    background: #fff0f0 !important;
+    border-color: #fcc !important;
+  }
+
+  .score-badge {
+    &.green { background: #f0fff4 !important; }
+    &.yellow { background: #fffbeb !important; }
+    &.red { background: #fff5f5 !important; }
+  }
+
+  .empty-state { background: #fafafa !important; color: #bbb !important; }
+
+  .pagination { border-top-color: #eee !important; }
+  .page-info { color: #bbb !important; }
+  .page-btn {
+    border-color: #e0e0e0 !important;
+    color: #999 !important;
+    &.active { background: #111 !important; color: #fff !important; border-color: #111 !important; }
+    &:hover:not(.active) { background: #f0f0f0 !important; color: #111 !important; }
+  }
+
+  // Settings
+  .setting-action-row {
+    background: #f9f9f9 !important;
+    border-color: #e0e0e0 !important;
+    &.danger { background: #fff5f5 !important; border-color: #fcc !important; }
+  }
+
+  .setting-row {
+    background: #f9f9f9 !important;
+    border-color: #e0e0e0 !important;
+  }
+
+  .setting-title, .action-title { color: #111 !important; }
+  .setting-desc, .action-desc, .card-desc { color: #999 !important; }
+
+  .row-btn {
+    background: #eee !important;
+    border-color: #ddd !important;
+    color: #666 !important;
+    &.active { background: #111 !important; color: #fff !important; border-color: #111 !important; }
+  }
+
+  .save-btn { background: #111 !important; color: #fff !important; }
+
+  // Detail page
+  .page-header { color: #111 !important; }
+  .page-date { color: #999 !important; }
+  .status-pill { background: #f5f5f5 !important; border-color: #e0e0e0 !important; color: #888 !important; }
+  .info-card { background: #fff !important; }
+  .info-key { color: #aaa !important; }
+  .info-val { color: #333 !important; &.url { color: #2563eb !important; } &.muted { color: #bbb !important; } }
+  .info-row { border-bottom-color: #eee !important; }
+  .metric-name { color: #888 !important; }
+  .metric-track { background: #eee !important; }
+}

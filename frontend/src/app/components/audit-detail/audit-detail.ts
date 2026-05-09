@@ -18,14 +18,23 @@ export class AuditDetail implements OnInit {
 
   constructor() {}
 
+
+
   ngOnInit() {
-    const nav = window.history.state;
+  const saved = localStorage.getItem('audittech-settings');
+  if (saved) {
+    const s = JSON.parse(saved);
+    if (s.lightMode) document.body.classList.add('light-mode');
+    else document.body.classList.remove('light-mode');
+  }
+   const nav = window.history.state;
     if (nav?.audit) {
       this.audit = nav.audit;
     } else {
       this.router.navigate(['/']);
     }
   }
+
 
   goBack() {
     this.router.navigate(['/']);
@@ -59,4 +68,9 @@ export class AuditDetail implements OnInit {
       { label: 'Cumulative Layout Shift', val: Math.min(100, Math.max(0, score - 3)) },
     ];
   }
+
+
+goToSettings() {
+  this.router.navigate(['/settings']);
+}
 }

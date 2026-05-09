@@ -48,8 +48,16 @@ export class AuditForm implements OnInit {
 
   private auditService = inject(AuditService);
 
+
+
   ngOnInit() {
-    this.chargerHistorique();
+  const saved = localStorage.getItem('audittech-settings');
+  if (saved) {
+    const s = JSON.parse(saved);
+    if (s.lightMode) document.body.classList.add('light-mode');
+    else document.body.classList.remove('light-mode');
+  }
+   this.chargerHistorique();
   }
 
   chargerHistorique() {

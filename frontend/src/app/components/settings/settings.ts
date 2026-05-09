@@ -62,6 +62,16 @@ clearHistory() {
     }
   });
 }
-
   
+goToDetail() {
+  this.auditService.getAudits().subscribe({
+    next: (audits) => {
+      if (!audits.length) return;
+      const last = audits.reduce((a: any, b: any) =>
+        new Date(a.createdAt) > new Date(b.createdAt) ? a : b
+      );
+      this.router.navigate(['/detail', last.id], { state: { audit: last } });
+    }
+  });
+}
 }

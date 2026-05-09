@@ -1,10 +1,15 @@
 <div class="settings-page" [class.light]="lightMode">
 
   <nav class="topnav">
-    <div class="logo"><span>Audit-Tech</span></div>
+    <div class="logo">
+      <span>Audit-Tech</span>
+    </div>
     <div class="nav-links">
-      <span class="nav-link" (click)="goBack()">Dashboard</span>
-      <span class="nav-link active">Settings & Integrations</span>
+        <span class="nav-link" (click)="goBack()">Dashboard</span>
+        <span class="nav-link">URL Input / Analysis</span>
+        <span class="nav-link">Results History</span>
+        <span class="nav-link" (click)="goToDetail()">Detail Report</span>
+        <span class="nav-link active">Settings & Integrations</span>
     </div>
     <button class="back-btn" (click)="goBack()">
       <mat-icon>arrow_back</mat-icon>
