@@ -258,3 +258,129 @@
   &.url { color: #7eb8f7; word-break: break-all; }
   &.muted { color: #444; }
 }
+
+
+// ── Responsive ────────────────────────────────────────
+@media (max-width: 900px) {
+  .topnav {
+    padding: 10px 16px;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+
+  .nav-link {
+    font-size: 11px;
+    padding: 4px 8px;
+  }
+
+  .content {
+    padding: 20px 16px;
+  }
+
+  .main-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .score-card {
+    grid-row: span 1;
+  }
+
+  .metrics-card {
+    grid-column: 1;
+  }
+
+  .info-card {
+    grid-column: 1;
+  }
+
+  .page-url {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 600px) {
+  .topnav {
+    flex-wrap: wrap;
+    padding: 8px 12px;
+    gap: 4px;
+  }
+
+  .logo {
+    order: 1;
+    flex-shrink: 0;
+  }
+
+  .nav-links {
+    display: flex !important;
+    flex-wrap: wrap;
+    width: 100%;
+    order: 2;
+    gap: 2px;
+    margin-top: 4px;
+  }
+
+  .nav-link {
+    font-size: 10px !important;
+    padding: 3px 6px !important;
+  }
+
+  .back-btn {
+    order: 3;
+    width: 100%;
+    justify-content: center;
+    margin-top: 4px;
+  }
+
+  .content {
+    padding: 16px 12px;
+  }
+
+  .page-header {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .page-url {
+    font-size: 14px;
+  }
+
+  .main-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .score-card {
+    grid-row: span 1;
+  }
+
+  .metrics-card {
+    grid-column: 1;
+  }
+
+  .info-card {
+    grid-column: 1;
+  }
+
+  .score-ring {
+    width: 140px !important;
+    height: 140px !important;
+  }
+
+  .metric-name {
+    width: 130px;
+    font-size: 11px;
+  }
+
+  .metric-val {
+    font-size: 11px;
+  }
+
+  .info-key {
+    width: 60px;
+    font-size: 10px;
+  }
+
+  .info-val {
+    font-size: 12px;
+  }
+}
