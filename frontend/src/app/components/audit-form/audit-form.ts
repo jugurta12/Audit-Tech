@@ -43,11 +43,11 @@ export class AuditForm implements OnInit {
   searchQuery: string = '';
   allAudits: any[] = []; // stocke la liste complète
   private router = inject(Router);
+  rowsPerPage: number = 10;
 
   displayedColumns: string[] = ['select', 'url', 'score', 'trend', 'date', 'actions'];
 
   private auditService = inject(AuditService);
-
 
 
   ngOnInit() {
@@ -56,12 +56,13 @@ export class AuditForm implements OnInit {
     const s = JSON.parse(saved);
     if (s.lightMode) document.body.classList.add('light-mode');
     else document.body.classList.remove('light-mode');
+     this.rowsPerPage = s.rowsPerPage ?? 10;
   }
    this.chargerHistorique();
   }
 
   chargerHistorique() {
-  this.auditService.getAudits().subscribe({
+  this.auditService.getAudits(this.rowsPerPage).subscribe({
     next: (data) => {
       this.allAudits = data.map((a: any) => ({ ...a, selected: false }));
       this.audits = [...this.allAudits];

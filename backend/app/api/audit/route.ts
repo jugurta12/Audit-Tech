@@ -85,11 +85,14 @@ export async function POST(request: Request) {
   }
 }
 
-export async function GET() {
+export async function GET(request: Request) {
   try {
+    const { searchParams } = new URL(request.url);
+    const take = Number(searchParams.get('take')) || 10;
+
     const audits = await prisma.audit.findMany({
       orderBy: { createdAt: "desc" },
-      take: 5,
+      take,
     });
 
     return NextResponse.json(audits, { headers: CORS_HEADERS });

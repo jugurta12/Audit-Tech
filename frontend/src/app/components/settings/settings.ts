@@ -46,18 +46,18 @@ export class Settings implements OnInit {
       lightMode: this.lightMode,
     }));
     this.applyTheme();
-    this.savedMessage = '✅ Settings saved!';
+    this.savedMessage = ' Settings saved!';
     setTimeout(() => this.savedMessage = '', 2500);
   }
 clearHistory() {
   if (!confirm('Vider tout l\'historique ? Cette action est irréversible.')) return;
   this.auditService.clearAll().subscribe({
     next: () => {
-      this.savedMessage = '🗑️ Historique vidé.';
+      this.savedMessage = ' Historique vidé.';
       setTimeout(() => this.savedMessage = '', 2500);
     },
     error: () => {
-      this.savedMessage = '❌ Erreur lors de la suppression.';
+      this.savedMessage = ' Erreur lors de la suppression.';
       setTimeout(() => this.savedMessage = '', 2500);
     }
   });
