@@ -16,8 +16,9 @@ export class AuditService {
     return this.http.post(this.apiUrl, { siteUrl: url });
   }
 
-  getAudits(take: number = 10): Observable<any[]> {
-  return this.http.get<any[]>(`${this.apiUrl}?take=${take}`);
+  getAudits(take: number = 10, page: number = 1): Observable<any> {
+  const skip = (page - 1) * take;
+  return this.http.get<any>(`${this.apiUrl}?take=${take}&skip=${skip}`);
 }
 
 supprimerAudit(id: number): Observable<any> {
