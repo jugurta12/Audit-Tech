@@ -61,16 +61,6 @@ export class AuditForm implements OnInit {
    this.chargerHistorique();
   }
 
-  chargerHistorique() {
-  this.auditService.getAudits(this.rowsPerPage).subscribe({
-    next: (data) => {
-      this.allAudits = data.map((a: any) => ({ ...a, selected: false }));
-      this.audits = [...this.allAudits];
-      this.sortAudits();
-    },
-    error: (err) => console.error('Erreur historique :', err)
-  });
-}
 
   lancerAudit() {
     if (!this.siteUrl || this.isLoading) return;
@@ -218,5 +208,37 @@ openLastDetail() {
 goToSettings() {
   this.router.navigate(['/settings']);
 }
+
+totalAudits: number = 0;
+currentPage: number = 1;
+
+chargerHistorique() {
+  this.auditService.getAudits(this.rowsPerPage, this.currentPage).subscribe({
+    next: (res: any) => {
+      this.allAudits = res.data.map((a: any) => ({ ...a, selected: false }));
+      this.audits = [...this.allAudits];
+      this.totalAudits = res.total;
+      this.sortAudits();
+    },
+    error: (err) => console.error('Erreur historique :', err)
+  });
+}
+
+get totalPages(): number {
+  return Math.ceil(this.totalAudits / this.rowsPerPage);
+}
+
+get pages(): number[] {
+  return Array.from({ length: this.totalPages }, (_, i) => i + 1);
+}
+
+goToPage(page: number) {
+  if (page < 1 || page > this.totalPages) return;
+  this.currentPage = page;
+  this.chargerHistorique();
+}
+
+nextPage() { this.goToPage(this.currentPage + 1); }
+prevPage() { this.goToPage(this.currentPage - 1); }
 }
 
