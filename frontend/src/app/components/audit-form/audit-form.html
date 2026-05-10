@@ -39,7 +39,7 @@
       </div>
       <div class="card stat-card">
         <div class="card-label">Total Analyses</div>
-        <div class="stat-value">{{ audits.length }}</div>
+        <div class="stat-value">{{ totalAudits }}</div>
         <div class="stat-sub">All time</div>
       </div>
     </div>
@@ -141,15 +141,18 @@
       </div>
 
       <div class="pagination">
-        <span class="page-info">Rows per page: {{ rowsPerPage }}</span>
-        <div class="page-btns">
-          <button class="page-btn">Prev</button>
-          <button class="page-btn active">1</button>
-          <button class="page-btn">2</button>
-          <button class="page-btn">3</button>
-          <button class="page-btn">Next</button>
-        </div>
-      </div>
+  <span class="page-info">Rows per page: {{ rowsPerPage }}</span>
+  <div class="page-btns">
+    <button class="page-btn" (click)="prevPage()" [disabled]="currentPage === 1">Prev</button>
+    <button class="page-btn"
+      *ngFor="let p of pages"
+      [class.active]="p === currentPage"
+      (click)="goToPage(p)">
+      {{ p }}
+    </button>
+    <button class="page-btn" (click)="nextPage()" [disabled]="currentPage === totalPages">Next</button>
+  </div>
+</div>
     </div>
 
   </div>
