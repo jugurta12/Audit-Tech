@@ -360,7 +360,7 @@
 // ── Material input dark override ───────────────────────
 .custom-dark-input {
   ::ng-deep {
-    .mat-mdc-text-field-wrapper { background-color:#f0f0f0 !important; }
+    .mat-mdc-text-field-wrapper { background-color: #1a1a1a !important; }
     .mat-mdc-form-field-flex { padding-top: 0 !important; }
     .mdc-notched-outline__leading,
     .mdc-notched-outline__notch,
@@ -507,4 +507,25 @@ mat-icon {
     padding: 4px 7px;
     font-size: 11px;
   }
+}
+
+:host-context(body.light-mode) {
+  .analyze-btn {
+    background: #111 !important;
+    color: #fff !important;
+    &:hover { background: #333 !important; }
+    &:disabled { background: #ccc !important; color: #888 !important; }
+  }
+
+  .custom-dark-input {
+  ::ng-deep {
+    .mat-mdc-text-field-wrapper { background-color: #e8e8e8 !important; }
+    .mat-mdc-form-field-flex { padding-top: 0 !important; }
+    .mdc-notched-outline__leading,
+    .mdc-notched-outline__notch,
+    .mdc-notched-outline__trailing { border-color: #2a2a2a !important; }
+    input { color: rgb(0, 0, 0) !important; }
+    label { color: #555 !important; }
+  }
+}
 }
