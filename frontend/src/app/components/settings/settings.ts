@@ -62,16 +62,14 @@ clearHistory() {
     }
   });
 }
-  
 goToDetail() {
-  this.auditService.getAudits().subscribe({
-    next: (audits) => {
-      if (!audits.length) return;
-      const last = audits.reduce((a: any, b: any) =>
-        new Date(a.createdAt) > new Date(b.createdAt) ? a : b
-      );
+  this.auditService.getAudits(1, 1).subscribe({
+    next: (res: any) => {
+      const last = res.data[0];
+      if (!last) return;
       this.router.navigate(['/detail', last.id], { state: { audit: last } });
-    }
+    },
+    error: (err) => console.error('Erreur goToDetail:', err)
   });
 }
 }

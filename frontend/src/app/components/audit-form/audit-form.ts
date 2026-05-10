@@ -56,10 +56,10 @@ export class AuditForm implements OnInit {
     const s = JSON.parse(saved);
     if (s.lightMode) document.body.classList.add('light-mode');
     else document.body.classList.remove('light-mode');
-     this.rowsPerPage = s.rowsPerPage ?? 10;
+    this.rowsPerPage = s.rowsPerPage ?? 10;
   }
-   this.chargerHistorique();
-  }
+  this.chargerHistorique();
+}
 
 
   lancerAudit() {
@@ -198,11 +198,14 @@ getCircleDash(score: number): string {
 }
 
 openLastDetail() {
-  if (this.audits.length === 0) return;
-  const last = this.allAudits.reduce((a, b) => 
-    new Date(a.createdAt) > new Date(b.createdAt) ? a : b
-  );
-  this.router.navigate(['/detail', last.id], { state: { audit: last } });
+  this.auditService.getAudits(1, 1).subscribe({
+    next: (res: any) => {
+      const last = res.data[0];
+      if (!last) return;
+      this.router.navigate(['/detail', last.id], { state: { audit: last } });
+    },
+    error: (err) => console.error('Erreur openLastDetail:', err)
+  });
 }
 
 goToSettings() {
