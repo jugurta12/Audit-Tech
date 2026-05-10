@@ -89,17 +89,22 @@ export async function GET(request: Request) {
   try {
     const { searchParams } = new URL(request.url);
     const take = Number(searchParams.get('take')) || 10;
+    const skip = Number(searchParams.get('skip')) || 0;
 
-    const audits = await prisma.audit.findMany({
-      orderBy: { createdAt: "desc" },
-      take,
-    });
+    const [audits, total] = await Promise.all([
+      prisma.audit.findMany({
+        orderBy: { createdAt: 'desc' },
+        take,
+        skip,
+      }),
+      prisma.audit.count(),
+    ]);
 
-    return NextResponse.json(audits, { headers: CORS_HEADERS });
+    return NextResponse.json({ data: audits, total }, { headers: CORS_HEADERS });
   } catch (error) {
-    console.error("❌ Erreur GET:", error);
+    console.error('❌ Erreur GET:', error);
     return NextResponse.json(
-      { error: "Erreur lors de la récupération" },
+      { error: 'Erreur lors de la récupération' },
       { status: 500, headers: CORS_HEADERS }
     );
   }
